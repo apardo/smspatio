@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" media="screen,projection" type="text/css" href="/stylesheets/reset.css" />
+    <link rel="stylesheet" media="screen,projection" type="text/css" href="/stylesheets/main.css" />
+    <!--[if lte IE 6]><link rel="stylesheet" type="text/css" href="/stylesheets/main-msie.css" /><![endif]-->
+    <link rel="stylesheet" media="screen,projection" type="text/css" href="/stylesheets/style.css" />
+    <link rel="stylesheet" media="print" type="text/css" href="/stylesheets/print.css" />
+    <%= javascript_include_tag "prototype", "effects", "application" %>
+    <title><%= @title %> - SMS Patio</title>
+  </head>
+  <body>
+    <div id="main">
+      <div id="header">
+        <p id="logo"><img src="/images/logo.png" alt="" /></p>
+        <div id="slogan">Queremos el cielo</div>
+      </div><!-- header -->
+      <hr class="noscreen" />
+      <div id="nav" class="box">
+        <ul>
+          <li class="active"><a href="/">Inicio</a></li>
+        </ul>
+        <p id="feeds">
+          <%= link_to 'Desconectar', logout_url %>
+        </p>
+      </div><!-- nav -->
+      <hr class="noscreen" />
+      <div id="cols">
+        <div id="cols-in" class="box">
+          <div id="content">
+            <% if flash[:notice] %>
+              <div id="flash" class="in">
+                <p id="breadcrumbs"><%= flash[:notice] %></p>
+              </div>
+              <script type="text/javascript">
+                <%= visual_effect(:fade, "flash", :duration => 15) %>
+              </script>
+            <% end %>
+            <h2 class="title-01">Redactar Mensaje</h2>
+            <div class="in">
+              <div class="box">
+                <% form_for :message, :url => { :controller => "message", :action => "create" } do |f| %>
+                  <%= f.text_area :body, :class => 'text_message', :maxlength => 140, :onkeyup => "return ismaxlength(this)" %>
+                  <%= submit_tag 'Enviar Mensaje', :class => 'submit_message' %>
+                <% end %>
+              </div><!-- box -->
+            </div><!-- in -->
+            <h2 class="title-01">Añadir Teléfono</h2>
+            <div class="in">
+              <div class="box">
+                <% form_for :contact, :url => { :controller => "contact", :action => "create" } do |f| %>
+                  <%= f.text_field :phone, :class => 'phone_field' %>
+                  <%= submit_tag 'Añadir', :class => 'submit_phone' %>
+                <% end %>
+              </div><!-- box -->
+            </div><!-- in -->
+          </div><!-- content -->
+          <hr class="noscreen" />
+          <div id="aside">
+            <h4 class="title-04">Mensajes Enviados</h4>
+            <div class="in">
+              <dl id="news" class="box">
+                <% @last_messages.each do |m| %>
+                  <dt><%= m.created_at.strftime('%d. %m. %Y') %></dt>
+                  <dd><%=h m.body %></dd>
+                <% end %>
+              </dl>
+            </div><!-- in -->
+          </div><!-- aside -->
+        </div><!-- cols-in -->
+      </div><!-- cols -->
+      <hr class="noscreen" />
+      <div id="footer" class="box">
+        <p class="f-right">
+          Nos quedan <strong><%= @balance %> créditos</strong> en la cuenta de Clickatell
+        </p>
+        <p class="f-left">Copyright &copy; <%= Time.now.year %> <a href="http://patiomaravillas.net">Patio Maravillas</a></p>
+      </div><!-- box -->
+    </div><!-- main -->
+  </body>
+</html>

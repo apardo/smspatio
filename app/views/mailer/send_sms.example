@@ -1,0 +1,10 @@
+api_id:your_ip_id
+user:your_username
+password:your_password
+reply:your_email_address
+
+<% @contacts.each do |contact| %>
+to:34<%= contact.phone %>
+<% end %>
+
+text:Mensaje de Prueba 

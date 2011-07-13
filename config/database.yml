@@ -1,0 +1,9 @@
+production:
+  adapter: mysql
+  encoding: utf8
+  reconnect: false
+  database: smspatio_production
+  pool: 5
+  username: smspatio
+  password: asdalksad834ja
+  socket: /var/run/mysqld/mysqld.sock
